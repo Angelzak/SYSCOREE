@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#17100e">
+    <title>MARS SURVIVAL | Centro de misión</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+    <div class="brand"><span class="brand-mark">M</span><div><strong>MARS SURVIVAL</strong><small>CENTRO DE EXPLORACIÓN</small></div></div>
+    <div class="mission-pill"><span class="pulse"></span> MISIÓN ACTIVA</div>
+</header>
+
+<main class="layout">
+    <section class="intro">
+        <div>
+            <p class="eyebrow">DESAFÍO · GUÍA DE SUPERVIVENCIA</p>
+            <h1>Explora el <em>planeta rojo.</em></h1>
+            <p class="intro-copy">Selecciona una región del mapa, consulta sus características y prepara tu recorrido de exploración.</p>
+        </div>
+        <div class="sol-tag">SOL <strong id="sol">01</strong></div>
+    </section>
+
+    <section class="dashboard">
+        <article class="panel map-panel">
+            <div class="panel-heading">
+                <div><p class="eyebrow">NAVEGACIÓN</p><h2>Mapa marciano</h2></div>
+                <span class="live-label">● CARTOGRAFÍA</span>
+            </div>
+            <div class="map-wrap">
+                <svg id="marsMap" viewBox="0 0 900 520" role="img" aria-label="Mapa ilustrativo de Marte con ubicaciones seleccionables">
+                    <defs>
+                        <radialGradient id="planet" cx="48%" cy="45%" r="75%">
+                            <stop offset="0%" stop-color="#c77b55"/>
+                            <stop offset="55%" stop-color="#914b36"/>
+                            <stop offset="100%" stop-color="#49251f"/>
+                        </radialGradient>
+                        <pattern id="grain" width="55" height="55" patternUnits="userSpaceOnUse">
+                            <circle cx="8" cy="12" r="2" fill="#f3b18b" opacity=".17"/>
+                            <circle cx="37" cy="32" r="4" fill="#321b18" opacity=".18"/>
+                            <path d="M2 44l12-5m22-29l9 3" stroke="#f4c0a0" opacity=".12" stroke-width="2"/>
+                        </pattern>
+                        <clipPath id="planetClip"><ellipse cx="450" cy="260" rx="390" ry="225"/></clipPath>
+                    </defs>
+                    <ellipse cx="450" cy="260" rx="400" ry="235" fill="#d27c55" opacity=".12"/>
+                    <ellipse cx="450" cy="260" rx="390" ry="225" fill="url(#planet)" stroke="#d98c67" stroke-width="2"/>
+                    <g clip-path="url(#planetClip)">
+                        <rect x="50" y="35" width="800" height="450" fill="url(#grain)"/>
+                        <path d="M75 160 Q190 85 300 150 T520 130 T840 170 L850 230 Q690 205 580 250 T330 230 T70 265Z" fill="#6f392d" opacity=".42"/>
+                        <path d="M90 330 Q230 250 340 310 T560 315 T840 280 L850 390 Q670 430 520 390 T270 420 T70 390Z" fill="#d68a62" opacity=".24"/>
+                        <path d="M620 80 Q560 180 630 235 T700 360" fill="none" stroke="#542b27" stroke-width="28" opacity=".5"/>
+                        <path d="M620 80 Q560 180 630 235 T700 360" fill="none" stroke="#d99a77" stroke-width="5" opacity=".45"/>
+                        <g fill="none" stroke="#492720" opacity=".4">
+                            <circle cx="250" cy="300" r="48" stroke-width="8"/><circle cx="250" cy="300" r="35" stroke-width="3"/>
+                            <circle cx="760" cy="160" r="38" stroke-width="7"/><circle cx="760" cy="160" r="27" stroke-width="3"/>
+                            <circle cx="480" cy="390" r="25" stroke-width="5"/>
+                        </g>
+                        <g id="mapMarkers"></g>
+                    </g>
+                    <text x="450" y="500" text-anchor="middle" fill="#e6b79f" font-size="13" letter-spacing="3">MAPA ESQUEMÁTICO · NO A ESCALA</text>
+                </svg>
+                <div class="map-legend"><span><i class="dot volcano"></i> Volcán</span><span><i class="dot crater"></i> Cráter</span><span><i class="dot canyon"></i> Cañón</span></div>
+            </div>
+            <div class="map-help">Selecciona uno de los puntos del mapa para consultar la región.</div>
+        </article>
+
+        <aside class="side-column">
+            <article class="panel location-panel">
+                <p class="eyebrow">REGIÓN SELECCIONADA</p>
+                <h2 id="locationName">Elige una ubicación</h2>
+                <span class="type-chip" id="locationType">SIN SELECCIÓN</span>
+                <p id="locationDescription" class="description">Pulsa un marcador del mapa para conocer sus características.</p>
+                <div class="interest-box"><span>INTERÉS DE EXPLORACIÓN</span><p id="locationInterest">Aquí aparecerá información útil para tu misión.</p></div>
+                <button id="setOrigin" class="button secondary" disabled>Establecer como origen</button>
+                <button id="setDestination" class="button primary" disabled>Elegir como destino</button>
+            </article>
+            <article class="panel route-panel">
+                <p class="eyebrow">PLANIFICADOR</p><h2>Tu recorrido</h2>
+                <div class="route-point"><span class="route-icon start">A</span><div><small>ORIGEN</small><strong id="originName">Sin definir</strong></div></div>
+                <div class="route-line"></div>
+                <div class="route-point"><span class="route-icon end">B</span><div><small>DESTINO</small><strong id="destinationName">Sin definir</strong></div></div>
+                <p id="routeMessage" class="route-message">Selecciona dos regiones para preparar tu recorrido.</p>
+                <button id="clearRoute" class="button text-button">Limpiar recorrido</button>
+            </article>
+        </aside>
+    </section>
+
+    <section class="lower-grid">
+        <article class="panel resources-panel">
+            <div class="panel-heading"><div><p class="eyebrow">ESTADO DE LA MISIÓN</p><h2>Recursos de supervivencia</h2></div><span class="simulated">SIMULACIÓN</span></div>
+            <div class="resource-grid">
+                <div class="resource"><div class="resource-title"><span>Oxígeno</span><b id="oxygenValue">85%</b></div><div class="bar"><i id="oxygenBar" style="width:85%"></i></div></div>
+                <div class="resource"><div class="resource-title"><span>Agua</span><b id="waterValue">70%</b></div><div class="bar"><i id="waterBar" style="width:70%"></i></div></div>
+                <div class="resource"><div class="resource-title"><span>Energía</span><b id="energyValue">92%</b></div><div class="bar"><i id="energyBar" style="width:92%"></i></div></div>
+                <div class="resource"><div class="resource-title"><span>Provisiones</span><b id="foodValue">78%</b></div><div class="bar"><i id="foodBar" style="width:78%"></i></div></div>
+            </div>
+            <div class="resource-actions"><button id="advanceSol" class="button primary">Avanzar un sol</button><button id="replenish" class="button secondary">Revisar suministros</button><button id="reset" class="button text-button">Reiniciar misión</button></div>
+            <p class="small-note">Los porcentajes son valores ficticios para practicar la toma de decisiones; no representan mediciones reales.</p>
+        </article>
+        <article class="panel alerts-panel">
+            <div class="panel-heading"><div><p class="eyebrow">CENTRO DE AVISOS</p><h2>Alertas de misión</h2></div><span class="alert-count" id="alertCount">1</span></div>
+            <div id="alertsList" class="alerts-list"><div class="alert-item warning"><span class="alert-symbol">!</span><div><strong>Condiciones extremas</strong><p>La superficie marciana presenta temperaturas muy bajas. Mantén el refugio preparado.</p></div></div></div>
+        </article>
+    </section>
+    <footer> MARS SURVIVAL <span>PROYECTO EDUCATIVO · SIMULACIÓN FICTICIA</span></footer>
+</main>
+<script src="script.js"></script>
+</body>
+</html>
